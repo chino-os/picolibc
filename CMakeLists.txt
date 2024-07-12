@@ -580,9 +580,9 @@ define_property(GLOBAL PROPERTY PICOLIBC_HEADERS
 
 add_subdirectory(newlib)
 
-install(TARGETS c
-  LIBRARY DESTINATION lib
-  PUBLIC_HEADER DESTINATION include)
+#install(TARGETS c
+#  LIBRARY DESTINATION lib
+#  PUBLIC_HEADER DESTINATION include)
 
 option(TESTS "Enable tests" OFF)
 if(TESTS)
@@ -609,5 +609,5 @@ if(TESTS)
 
 endif()
 
-install(FILES ${CMAKE_BINARY_DIR}/picolibc.specs DESTINATION lib)
-install(FILES ${CMAKE_BINARY_DIR}/picolibc/include/picolibc.h DESTINATION include)
+#install(FILES ${CMAKE_BINARY_DIR}/picolibc.specs DESTINATION lib)
+#install(FILES ${CMAKE_BINARY_DIR}/picolibc/include/picolibc.h DESTINATION include)
