@@ -38,8 +38,10 @@ No supporting OS subroutines are required.
 
 #include <ctype.h>
 
+#ifndef __declare_extern_inline
 int
 isblank (int c)
 {
     return c == ' ' || c == '\t';
 }
+#endif

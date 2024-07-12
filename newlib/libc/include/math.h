@@ -369,7 +369,7 @@ int __issignalingl(long double d);
 #endif /* _HAVE_LONG_DOUBLE */
 #endif
 
-#if __GNUC_PREREQ (4, 0)
+#if __GNUC_PREREQ (4, 0) || defined(__clang__)
   #if defined(_HAVE_LONG_DOUBLE)
     #define signbit(__x)							\
 	    ((sizeof(__x) == sizeof(float))  ? __builtin_signbitf(__x) :	\

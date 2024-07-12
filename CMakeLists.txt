@@ -512,14 +512,27 @@ set(PREFIX "${PROJECT_BINARY_DIR}")
 
 configure_file(picolibc.specs.in "${PROJECT_BINARY_DIR}/picolibc.specs" @ONLY)
 
-set(PICOLIBC_COMPILE_OPTIONS
-  "-nostdlib"
-  "-D_LIBC"
-  ${TLSMODEL}
-  ${TARGET_COMPILE_OPTIONS}
-  ${PICOLIBC_EXTRA_COMPILE_OPTIONS}
-  ${PICOLIBC_MATH_FLAGS}
-  )
+if (MSVC)
+  set(PICOLIBC_COMPILE_OPTIONS
+    "/X"
+    "/std:c11"
+    "/Za"
+    "/D__STDC__=1"
+    "-D_LIBC"
+    ${TARGET_COMPILE_OPTIONS}
+    ${PICOLIBC_EXTRA_COMPILE_OPTIONS}
+    ${PICOLIBC_MATH_FLAGS}
+    )
+else()
+  set(PICOLIBC_COMPILE_OPTIONS
+    "-nostdlib"
+    "-D_LIBC"
+    ${TLSMODEL}
+    ${TARGET_COMPILE_OPTIONS}
+    ${PICOLIBC_EXTRA_COMPILE_OPTIONS}
+    ${PICOLIBC_MATH_FLAGS}
+    )
+endif()
 
 # Strip out any generator expressions as those cannot be used with
 # try_compile
@@ -530,20 +543,27 @@ foreach(c_option "${PICOLIBC_COMPILE_OPTIONS}")
   endif()
 endforeach()
 
-picolibc_supported_compile_options(
-  "-fno-common"
-  "-fno-stack-protector"
-  "-ffunction-sections"
-  "-fdata-sections"
-  "-Wall"
-  "-Wextra"
-  "-Werror=implicit-function-declaration"
-  "-Werror=vla"
-  "-Warray-bounds"
-  "-Wold-style-definition"
-  "-frounding-math"
-  "-fsignaling-nans"
-  )
+if (MSVC)
+  picolibc_supported_compile_options(
+    "-Wno-pointer-sign"
+    "-Wno-deprecated-declarations"
+    )
+else()
+  picolibc_supported_compile_options(
+    "-fno-common"
+    "-fno-stack-protector"
+    "-ffunction-sections"
+    "-fdata-sections"
+    "-Wall"
+    "-Wextra"
+    "-Werror=implicit-function-declaration"
+    "-Werror=vla"
+    "-Warray-bounds"
+    "-Wold-style-definition"
+    "-frounding-math"
+    "-fsignaling-nans"
+    )
+endif()
 
 add_library(c STATIC)
 

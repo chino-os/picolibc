@@ -32,7 +32,7 @@
 #include <intrin.h>
 
 static inline uint32_t floor_log2(const uint32_t value) {
-  uint32_t index;
+  long index;
   return _BitScanReverse(&index, value) ? index : 32;
 }
 

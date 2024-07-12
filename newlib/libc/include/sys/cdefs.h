@@ -49,7 +49,7 @@
 #define __DOTS    	, ...
 #define __THROW
 
-#ifdef __GNUC__
+#if defined(__GNUC__) || defined(_MSC_VER)
 # define __ASMNAME(cname)  __XSTRING (__USER_LABEL_PREFIX__) cname
 #endif
 

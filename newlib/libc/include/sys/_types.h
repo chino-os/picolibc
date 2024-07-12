@@ -62,12 +62,12 @@ typedef __WINT_TYPE__ wint_t;
 #include <machine/_types.h>
 
 #ifndef __machine_blkcnt_t_defined
-typedef long __blkcnt_t;
+typedef __intptr_t __blkcnt_t;
 typedef __int64_t __blkcnt64_t;
 #endif
 
 #ifndef __machine_blksize_t_defined
-typedef long __blksize_t;
+typedef __intptr_t __blksize_t;
 #endif
 
 #ifndef __machine_fsblkcnt_t_defined
@@ -79,7 +79,7 @@ typedef __uint32_t __fsfilcnt_t;
 #endif
 
 #ifndef __machine_off_t_defined
-typedef long _off_t;
+typedef __intptr_t _off_t;
 #endif
 
 #if defined(__XMK__)
@@ -155,7 +155,7 @@ typedef __uint64_t __off64_t;
 typedef _off64_t __loff_t;
 
 #ifndef __machine_key_t_defined
-typedef long __key_t;
+typedef __intptr_t __key_t;
 #endif
 
 /*
@@ -163,7 +163,7 @@ typedef long __key_t;
  * so we use _fpos_t instead.
  */
 #ifndef __machine_fpos_t_defined
-typedef long _fpos_t;		/* XXX must match off_t in <sys/types.h> */
+typedef __intptr_t _fpos_t;		/* XXX must match off_t in <sys/types.h> */
 				/* (and must be `long' for now) */
 #endif
 
@@ -181,7 +181,7 @@ typedef __SIZE_TYPE__ __size_t;
 #if defined(__INT_MAX__) && __INT_MAX__ == 2147483647
 typedef unsigned int __size_t;
 #else
-typedef unsigned long __size_t;
+typedef unsigned __intptr_t __size_t;
 #endif
 #endif
 #endif
@@ -198,7 +198,7 @@ typedef __SIZE_TYPE__ _ssize_t;
 #if defined(__INT_MAX__) && __INT_MAX__ == 2147483647
 typedef int _ssize_t;
 #else
-typedef long _ssize_t;
+typedef __intptr_t _ssize_t;
 #endif
 #endif
 #endif
@@ -243,7 +243,7 @@ typedef	_TIME_T_	__time_t;
 typedef	_CLOCKID_T_	__clockid_t;
 
 #ifndef __machine_daddr_t_defined
-typedef	long		__daddr_t;
+typedef	__intptr_t		__daddr_t;
 #endif
 
 #define	_TIMER_T_	unsigned long
@@ -259,7 +259,7 @@ typedef	__uint32_t	__socklen_t;
 
 typedef	__int32_t	__nl_item;
 typedef	unsigned short	__nlink_t;
-typedef	long		__suseconds_t;	/* microseconds (signed) */
-typedef	unsigned long	__useconds_t;	/* microseconds (unsigned) */
+typedef	__intptr_t		__suseconds_t;	/* microseconds (signed) */
+typedef	__uintptr_t	__useconds_t;	/* microseconds (unsigned) */
 
 #endif	/* _SYS__TYPES_H */

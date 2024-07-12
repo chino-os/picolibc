@@ -41,26 +41,31 @@ function(picolibc_sources_flags flags)
   get_property(current_sources_fake TARGET c PROPERTY SOURCES_FAKE)
   set(current_sources ${current_sources_real} ${current_sources_fake})
   set(sources ${ARGN})
+  string(MD5 sources_md5 "${sources}")
+  set(cached_sources sources_${sources_md5})
 
-  foreach(source IN LISTS ARGN)
-    # Compare desired addition to existing sources using basenames
-    get_filename_component(source_base "${source}" NAME_WLE)
-    foreach(current IN LISTS current_sources)
-      get_filename_component(current_base "${current}" NAME_WLE)
-      if("${source_base}" STREQUAL "${current_base}")
-	list(REMOVE_ITEM sources "${source}")
-      endif()
+  if (NOT DEFINED ${cached_sources})
+    foreach(source IN LISTS ARGN)
+      # Compare desired addition to existing sources using basenames
+      get_filename_component(source_base "${source}" NAME_WLE)
+      foreach(current IN LISTS current_sources)
+        get_filename_component(current_base "${current}" NAME_WLE)
+        if("${source_base}" STREQUAL "${current_base}")
+  	list(REMOVE_ITEM sources "${source}")
+        endif()
+      endforeach()
     endforeach()
-  endforeach()
+    set(${cached_sources} ${sources} CACHE INTERNAL "${cached_sources}")
+  endif()
 
   # Add all files that aren't duplicated
-  target_sources(c PRIVATE ${sources})
+  target_sources(c PRIVATE ${${cached_sources}})
 
   # Set flags if specified
   if(flags)
     foreach(flag ${flags})
-      foreach(source ${sources})
-	set_property(SOURCE ${source}
+      foreach(source ${${cached_sources}})
+	set_property(SOURCE ${${cached_sources}}
 	  TARGET_DIRECTORY c
 	  APPEND PROPERTY COMPILE_OPTIONS ${flag})
       endforeach()
@@ -107,10 +112,12 @@ function(_picolibc_supported_compile_options var)
   set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
   foreach(flag ${ARGN})
     string(MAKE_C_IDENTIFIER ${flag} flag_under)
-    try_compile(${flag_under} "${PROJECT_BINARY_DIR}"
-      "${CMAKE_CURRENT_SOURCE_DIR}/cmake/simple-main.c"
-      COMPILE_DEFINITIONS "${PICOLIBC_TEST_COMPILE_OPTIONS};${PICOLIBC_FLAG_OPTIONS};${flag}"
-      )
+    if (NOT DEFINED ${flag_under})
+      try_compile(${flag_under} "${PROJECT_BINARY_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/simple-main.c"
+        COMPILE_DEFINITIONS "${PICOLIBC_TEST_COMPILE_OPTIONS};${PICOLIBC_FLAG_OPTIONS};${flag}"
+        )
+    endif()
     if(${${flag_under}})
       list(APPEND options ${flag})
     endif()
@@ -136,24 +143,24 @@ function(picolibc_supported_compile_options)
 endfunction()
 
 function(picolibc_flag flag)
+  if (NOT DEFINED ${flag})
+    string(REPLACE "_" "-" flag_dash ${flag})
+    string(REGEX REPLACE "^-" "" flag_trim ${flag_dash})
+    string(TOLOWER ${flag_trim} flag_lower)
+    set(flag_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${flag_lower}.c")
 
-  string(REPLACE "_" "-" flag_dash ${flag})
-  string(REGEX REPLACE "^-" "" flag_trim ${flag_dash})
-  string(TOLOWER ${flag_trim} flag_lower)
-  set(flag_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${flag_lower}.c")
+    if (NOT EXISTS "${flag_file}")
+      message(ERROR " Missing compiler test file ${flag_file}")
+    endif()
 
-  if (NOT EXISTS "${flag_file}")
-    message(ERROR " Missing compiler test file ${flag_file}")
-  endif()
+    set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+    try_compile(${flag} "${PROJECT_BINARY_DIR}" "${flag_file}"
+      COMPILE_DEFINITIONS "${PICOLIBC_FLAG_OPTIONS}"
+      )
 
-  set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
-
-  try_compile(${flag} "${PROJECT_BINARY_DIR}" "${flag_file}"
-    COMPILE_DEFINITIONS "${PICOLIBC_FLAG_OPTIONS}"
-    )
-
-  if (${flag})
-    set(${flag} ${flag} PARENT_SCOPE)
+    if (${flag})
+      set(${flag} ${flag} PARENT_SCOPE)
+    endif()
   endif()
 endfunction()
 
