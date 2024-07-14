@@ -136,17 +136,6 @@ typedef __FILE FILE;
 # define __FILE_defined
 #endif
 
-/**
-   This symbol is defined when stdin/stdout/stderr are global
-   variables. When undefined, the old __iob array is used which
-   contains the pointers instead
-*/
-#define PICOLIBC_STDIO_GLOBALS
-
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
-
 /* The stdin, stdout, and stderr symbols are described as macros in the C
  * standard. */
 #define stdin stdin
@@ -196,6 +185,17 @@ extern FILE *const stderr;
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+/**
+   This symbol is defined when stdin/stdout/stderr are global
+   variables. When undefined, the old __iob array is used which
+   contains the pointers instead
+*/
+#define PICOLIBC_STDIO_GLOBALS
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
 
 FILE *fdevopen(int (*__put)(char, FILE*), int (*__get)(FILE*), int(*__flush)(FILE *));
 int	fclose(FILE *__stream);

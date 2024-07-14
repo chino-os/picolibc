@@ -515,8 +515,6 @@ configure_file(picolibc.specs.in "${PROJECT_BINARY_DIR}/picolibc.specs" @ONLY)
 if (MSVC)
   set(PICOLIBC_COMPILE_OPTIONS
     "/X"
-    "/std:c11"
-    "/Za"
     "/D__STDC__=1"
     "-D_LIBC"
     ${TARGET_COMPILE_OPTIONS}

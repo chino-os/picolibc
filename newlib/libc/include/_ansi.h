@@ -53,7 +53,7 @@ SUCH DAMAGE.
 #define _BEGIN_STD_C extern "C" {
 #define _END_STD_C  }
 #endif
-#if __GNUC_PREREQ (3, 3)
+#if __GNUC_PREREQ (3, 3) || defined(__clang__)
 #define _NOTHROW __attribute__ ((__nothrow__))
 #else
 #define _NOTHROW throw()
@@ -62,7 +62,7 @@ SUCH DAMAGE.
 #else
 #define _BEGIN_STD_C
 #define _END_STD_C
-#if __GNUC_PREREQ (3, 3)
+#if __GNUC_PREREQ (3, 3) || defined(__clang__)
 #define _NOTHROW __attribute__ ((__nothrow__))
 #else
 #define _NOTHROW

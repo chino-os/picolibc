@@ -135,7 +135,7 @@
 /*
  * Compiler memory barriers, specific to gcc and clang.
  */
-#define	__compiler_membar()	__asm __volatile(" " : : : "memory")
+#define	__compiler_membar()	__asm volatile(" " : : : "memory")
 
 #define	__GNUCLIKE_BUILTIN_NEXT_ARG 1
 #define	__GNUCLIKE_MATH_BUILTIN_RELOPS
@@ -177,7 +177,7 @@
 
 #define	__const		const		/* define reserved names to standard */
 #define	__signed	signed
-#define	__volatile	volatile
+//#define	__volatile	volatile
 #if defined(__cplusplus)
 #define	__inline	inline		/* convert to C++ keyword */
 #else
@@ -195,7 +195,7 @@
 #define	__const				/* delete pseudo-ANSI C keywords */
 #define	__inline
 #define	__signed
-#define	__volatile
+#define	volatile
 /*
  * In non-ANSI C environments, new programs will want ANSI-only C keywords
  * deleted from the program and old programs will want them left alone.
@@ -257,7 +257,7 @@
 #define	__alloc_align(x)
 #endif
 
-#if !__GNUC_PREREQ__(2, 95)
+#if !__GNUC_PREREQ__(2, 95) && !defined(__clang__)
 #define	__alignof(x)	__offsetof(struct { char __a; x __b; }, __b)
 #endif
 
@@ -802,7 +802,7 @@
 #endif
 
 /* Guard variables and structure members by lock. */
-#define	__guarded_by(x)		__lock_annotate(guarded_by(x))
+//#define	__guarded_by(x)		__lock_annotate(guarded_by(x))
 #define	__pt_guarded_by(x)	__lock_annotate(pt_guarded_by(x))
 
 /* Alignment builtins for better type checking and improved code generation. */
