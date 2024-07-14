@@ -577,6 +577,7 @@ define_property(GLOBAL PROPERTY PICOLIBC_HEADERS
   FULL_DOCS "These are names of header files which are to be installed.")
 
 add_subdirectory(newlib)
+add_subdirectory(compiler_rt)
 
 #install(TARGETS c
 #  LIBRARY DESTINATION lib

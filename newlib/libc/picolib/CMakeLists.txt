@@ -34,7 +34,7 @@
 #
 
 picolibc_sources(
-  picosbrk.c
+  #picosbrk.c
   dso_handle.c
   getauxval.c
   )

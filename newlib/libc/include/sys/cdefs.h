@@ -393,7 +393,7 @@
 /*
  * When this macro is defined, use it to declare inline versions of extern functions.
  */
-#define __declare_extern_inline(type) extern __inline type __attribute((gnu_inline, always_inline))
+// #define __declare_extern_inline(type) extern __inline type __attribute((gnu_inline, always_inline))
 #endif
 
 #if defined(__clang__) && defined(__nonnull)
