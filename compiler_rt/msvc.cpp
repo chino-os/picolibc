@@ -34,6 +34,11 @@ abort()
 }
 
 void
+__chkstk()
+{
+}
+
+void
 guard_check_icall()
 {
 }
