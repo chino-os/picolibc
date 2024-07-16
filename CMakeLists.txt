@@ -578,6 +578,7 @@ define_property(GLOBAL PROPERTY PICOLIBC_HEADERS
 
 add_subdirectory(newlib)
 add_subdirectory(compiler_rt)
+add_subdirectory(chino)
 
 #install(TARGETS c
 #  LIBRARY DESTINATION lib
