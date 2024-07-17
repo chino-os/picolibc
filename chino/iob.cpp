@@ -11,15 +11,19 @@ using namespace chino::os::kernel;
 static int
 stdio_putc(char c, FILE *file)
 {
-    ke_services().write(0, &c, 1);
-    return (unsigned char)c;
+    if (ke_services().write(STDOUT_FILENO, &c, 1) != -1) {
+        return (unsigned char)c;
+    } else {
+        errno = ke_services().errno_();
+        return -1;
+    }
 }
 
 static int
 stdio_getc(FILE *file)
 {
     char c;
-    auto ret = ke_services().read(0, &c, 1);
+    auto ret = ke_services().read(STDIN_FILENO, &c, 1);
     return ret > 0 ? c : ret;
 }
 

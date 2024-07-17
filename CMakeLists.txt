@@ -580,9 +580,9 @@ add_subdirectory(newlib)
 add_subdirectory(compiler_rt)
 add_subdirectory(chino)
 
-#install(TARGETS c
-#  LIBRARY DESTINATION lib
-#  PUBLIC_HEADER DESTINATION include)
+install(TARGETS c
+  LIBRARY DESTINATION lib
+  PUBLIC_HEADER DESTINATION include)
 
 option(TESTS "Enable tests" OFF)
 if(TESTS)
