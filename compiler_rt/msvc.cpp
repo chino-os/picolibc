@@ -141,38 +141,9 @@ int __cdecl mainCRTStartup()
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                    _In_ LPSTR lpCmdLine, _In_ int nShowCmd) __weak_symbol;
 
-void __cdecl WinMainCRTStartup(void)
+int __cdecl WinMainCRTStartup(void)
 {
-    int mainret;
-    LPSTR lpszCommandLine;
-    STARTUPINFO StartupInfo;
-
-    lpszCommandLine = (LPSTR)GetCommandLine();
-
-    if (*lpszCommandLine == '"') {
-        lpszCommandLine++;
-        while (*lpszCommandLine && (*lpszCommandLine != '"'))
-            lpszCommandLine++;
-
-        if (*lpszCommandLine == '"')
-            lpszCommandLine++;
-    } else {
-        while (*lpszCommandLine > ' ')
-            lpszCommandLine++;
-    }
-
-    while (*lpszCommandLine && (*lpszCommandLine <= ' '))
-        lpszCommandLine++;
-
-    StartupInfo.dwFlags = 0;
-    GetStartupInfo(&StartupInfo);
-
-    mainret = WinMain(GetModuleHandle(NULL), NULL, lpszCommandLine,
-                      StartupInfo.dwFlags & STARTF_USESHOWWINDOW ?
-                          StartupInfo.wShowWindow :
-                          SW_SHOWDEFAULT);
-
-    ExitProcess(mainret);
+    return mainCRTStartup();
 }
 
 #include <unistd.h>
@@ -180,25 +151,25 @@ void __cdecl WinMainCRTStartup(void)
 
 char heap_[1024 * 1024 * 4];
 
-static char *brk = heap_;
+//static char *brk = heap_;
 
-void *
-sbrk(ptrdiff_t incr)
-{
-    if (incr < 0) {
-        if ((size_t)(brk - heap_) < (size_t)(-incr)) {
-            errno = ENOMEM;
-            return (void *)-1;
-        }
-    } else {
-        if ((size_t)(heap_ + sizeof(heap_) - brk) < (size_t)incr) {
-            errno = ENOMEM;
-            return (void *)-1;
-        }
-    }
-    void *ret = brk;
-    brk += incr;
-    return ret;
-}
+//void *
+//sbrk(ptrdiff_t incr)
+//{
+//    if (incr < 0) {
+//        if ((size_t)(brk - heap_) < (size_t)(-incr)) {
+//            errno = ENOMEM;
+//            return (void *)-1;
+//        }
+//    } else {
+//        if ((size_t)(heap_ + sizeof(heap_) - brk) < (size_t)incr) {
+//            errno = ENOMEM;
+//            return (void *)-1;
+//        }
+//    }
+//    void *ret = brk;
+//    brk += incr;
+//    return ret;
+//}
 }
 #endif
