@@ -4,6 +4,7 @@
 #include <chino/os/kernel/ke_services.h>
 #include <unistd.h>
 #include <sys/file.h>
+#include <sys/ioctl.h>
 
 using namespace chino;
 using namespace chino::os;
@@ -50,6 +51,22 @@ ssize_t
 write(int fd, const void *buf, size_t count)
 {
     auto ret = ke_services().write(fd, buf, count);
+    if (ret != -1) {
+        return ret;
+    } else {
+        errno = ke_services().errno_();
+        return -1;
+    }
+}
+
+int
+ioctl(int fd, int req, ...)
+{
+    va_list ap;
+    va_start(ap, req);
+    auto ret = ke_services().vioctl(fd, req, ap);
+    va_end(ap);
+
     if (ret != -1) {
         return ret;
     } else {
