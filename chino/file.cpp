@@ -64,7 +64,8 @@ ioctl(int fd, int req, ...)
 {
     va_list ap;
     va_start(ap, req);
-    auto ret = ke_services().vioctl(fd, req, ap);
+    auto arg = va_arg(ap, void *);
+    auto ret = ke_services().ioctl(fd, req, arg);
     va_end(ap);
 
     if (ret != -1) {
