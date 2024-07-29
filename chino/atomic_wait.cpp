@@ -8,9 +8,8 @@ using namespace chino::os;
 using namespace chino::os::kernel;
 
 result<void>
-os::atomic_wait(
-    std::atomic<uint32_t> &atomic, uint32_t old,
-    std::optional<std::chrono::milliseconds> timeout = std::nullopt) noexcept
+os::atomic_wait(std::atomic<uint32_t> &atomic, uint32_t old,
+                std::optional<std::chrono::milliseconds> timeout) noexcept
 {
     if (atomic.load(std::memory_order_acquire) != old) {
         // 1. Fast path
