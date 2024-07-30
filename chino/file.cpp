@@ -4,6 +4,7 @@
 #include <chino/os/kernel/ke_services.h>
 #include <unistd.h>
 #include <sys/file.h>
+#include <chino/os/ioapi.h>
 #include <sys/ioctl.h>
 
 using namespace chino;
@@ -74,4 +75,17 @@ ioctl(int fd, int req, ...)
         errno = ke_services().errno_();
         return -1;
     }
+}
+
+result<async_io_result *>
+os::wait_queued_io() noexcept
+{
+    return ke_services().wait_queued_io();
+}
+
+result<void>
+os::read_async(int fd, std::span<std::byte> buffer, size_t offset,
+               async_io_result &result) noexcept
+{
+    return ke_services().read_async(fd, buffer, offset, result);
 }
