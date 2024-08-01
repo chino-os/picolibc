@@ -1,7 +1,7 @@
 // Copyright (c) SunnyCase. All rights reserved.
 // Licensed under the Apache license. See LICENSE file in the project root for full license information.
 #include <stdio.h>
-#include <chino/os/kernel/ke_services.h>
+#include <chino/os/ke_services.h>
 #include <unistd.h>
 #include <sys/file.h>
 #include <chino/os/ioapi.h>
@@ -9,7 +9,14 @@
 
 using namespace chino;
 using namespace chino::os;
-using namespace chino::os::kernel;
+
+#ifndef CHINO_CRT_KERNEL
+i_ke_services &
+os::ke_services() noexcept
+{
+    return *reinterpret_cast<i_ke_services *>(ke_services_address);
+}
+#endif
 
 int
 open(const char *pathname, int flags, ...)

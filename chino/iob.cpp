@@ -2,11 +2,10 @@
 // Licensed under the Apache license. See LICENSE file in the project root for full license information.
 #include <stdio.h>
 #include <sys/cdefs.h>
-#include <chino/os/kernel/ke_services.h>
+#include <chino/os/ke_services.h>
 
 using namespace chino;
 using namespace chino::os;
-using namespace chino::os::kernel;
 
 static int
 stdio_putc(char c, FILE *file)

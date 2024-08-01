@@ -130,6 +130,12 @@ typedef	__blksize_t	blksize_t;
 #define	_BLKSIZE_T_DECLARED
 #endif
 
+/* Network related */
+
+typedef __socklen_t socklen_t;
+#define __socklen_t_defined
+typedef __sa_family_t sa_family_t;
+
 #if !defined(__clock_t_defined) && !defined(_CLOCK_T_DECLARED)
 typedef	_CLOCK_T_	clock_t;
 #define	__clock_t_defined
