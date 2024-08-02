@@ -69,6 +69,8 @@ SUCH DAMAGE.
 #define CLK_TCK CLOCKS_PER_SEC
 #endif
 
+#define TIME_UTC 1
+
 #include <sys/types.h>
 #include <sys/timespec.h>
 
@@ -236,6 +238,8 @@ int timer_getoverrun (timer_t timerid);
 /* High Resolution Sleep, P1003.1b-1993, p. 269 */
 
 int nanosleep (const struct timespec  *rqtp, struct timespec *rmtp);
+
+int timespec_get(struct timespec *ts, int base);
 
 #ifdef __cplusplus
 }

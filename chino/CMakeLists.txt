@@ -2,7 +2,8 @@ include_directories(${CHINO_DDK_INCLUDE_DIR})
 set(SRCS atomic_wait.cpp
          iob.cpp
          file.cpp
-         termios.cpp)
+         termios.cpp
+         time.cpp)
 
 add_library(c.host OBJECT ${SRCS})
 target_link_libraries(c.host PRIVATE c cxx-headers)

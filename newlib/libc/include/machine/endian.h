@@ -21,7 +21,7 @@
 #define	BYTE_ORDER	_BYTE_ORDER
 #endif
 
-#ifdef __GNUC__
+#if defined(__GNUC__) || defined(__clang__)
 #define	__bswap16(_x)	__builtin_bswap16(_x)
 #define	__bswap32(_x)	__builtin_bswap32(_x)
 #define	__bswap64(_x)	__builtin_bswap64(_x)

@@ -597,6 +597,11 @@ extern "C" {
 
 #endif /* __CYGWIN__ */
 
+#ifdef __CHINO__
+#define _POSIX_VERSION                          199309L
+#define _POSIX_TIMERS                           1
+#endif
+
 #ifdef __cplusplus
 }
 #endif

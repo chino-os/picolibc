@@ -27,4 +27,8 @@
 #endif
 #endif /* __machine_host_to_from_network_defined */
 
+const char *inet_ntop(int af, const void *src __restrict, char *dst __restrict,
+                      socklen_t size);
+int inet_pton(int af, const char *src__restrict, void *dst __restrict);
+
 #endif /* __ARPA_INET_H__ */
