@@ -250,7 +250,7 @@ typedef	__intptr_t		__daddr_t;
 typedef	_TIMER_T_	__timer_t;
 
 #ifndef __machine_sa_family_t_defined
-typedef	__uint8_t	__sa_family_t;
+typedef	__uint16_t	__sa_family_t;
 #endif
 
 #ifndef __machine_socklen_t_defined
