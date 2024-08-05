@@ -352,7 +352,7 @@ if(NOT DEFINED _ASSERT_VERBOSE)
 endif()
 
 if(NOT DEFINED _MB_CAPABLE)
-  option(_MB_CAPABLE "Enable multi-byte support" 0)
+  option(_MB_CAPABLE "Enable multi-byte support" 1)
 endif()
 
 set(_MB_LEN_MAX 1 1)

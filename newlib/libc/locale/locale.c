@@ -491,6 +491,7 @@ __loadlocale (struct __locale_t *loc, int category, char *new_locale)
     return loc->categories[category];
 
   int ret = 0;
+  (void)ret;
 
 #ifdef __CYGWIN__
   /* This additional code handles the case that the incoming locale string

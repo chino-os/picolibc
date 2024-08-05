@@ -223,7 +223,7 @@
  * a feature that we cannot live without.
  */
 #define	__weak_symbol	__attribute__((__weak__))
-#if !__GNUC_PREREQ__(2, 5)
+#if !__GNUC_PREREQ__(2, 5) && !defined(__clang__)
 #define	__dead2
 #define	__pure2
 #define	__unused
@@ -234,7 +234,7 @@
 #define	__unused
 /* XXX Find out what to do for __packed, __aligned and __section */
 #endif
-#if __GNUC_PREREQ__(2, 7)
+#if __GNUC_PREREQ__(2, 7) || defined(__clang__)
 #define	__dead2		__attribute__((__noreturn__))
 #define	__pure2		__attribute__((__const__))
 #define	__unused	__attribute__((__unused__))

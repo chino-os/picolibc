@@ -61,6 +61,18 @@ void __cdecl _invalid_parameter(_In_opt_z_ wchar_t const *,
 void(__cdecl *__guard_check_icall_fptr)() = guard_check_icall;
 void(__cdecl *__guard_dispatch_icall_fptr)() = guard_check_icall;
 
+int __cdecl _purecall()
+{
+    while (1)
+        ;
+}
+
+void __cdecl __std_terminate()
+{
+    while (1)
+        ;
+}
+
 /* Thread Local Storage index for this .EXE or .DLL */
 
 ULONG _tls_index = 0;
