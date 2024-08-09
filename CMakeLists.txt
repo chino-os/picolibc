@@ -496,7 +496,7 @@ set(CC1_SPEC "")
 set(CC1PLUS_SPEC "")
 set(ADDITIONAL_LIBS "")
 set(SPECS_EXTRA "")
-set(SPECS_ISYSTEM "-isystem ${PROJECT_BINARY_DIR}/${include}")
+set(SPECS_ISYSTEM "-isystem ${PROJECT_BINARY_DIR}/${include} -isysroot ${PROJECT_BINARY_DIR}/${include}")
 set(SPECS_LIBPATH "-L${PROJECT_BINARY_DIR}")
 set(SPECS_STARTFILE "${PROJECT_BINARY_DIR}/crt0.o")
 string(APPEND SPECS_PRINTF "%{DPICOLIBC_FLOAT_PRINTF_SCANF:--defsym=vfprintf=__f_vfprintf}"
@@ -560,12 +560,19 @@ else()
     "-Wold-style-definition"
     "-frounding-math"
     "-fsignaling-nans"
+    "-Wno-empty-translation-unit"
+    "-Wno-gnu-empty-initializer"
+    "-Wno-extra-semi"
+    "-Wno-pedantic"
     )
 endif()
 
 add_library(c STATIC)
 
 target_compile_options(c PRIVATE ${PICOLIBC_COMPILE_OPTIONS})
+if (NOT MSVC)
+  target_compile_options(c PUBLIC ${SPECS_ISYSTEM})
+endif()
 
 set(PICOLIBC_INCLUDE_DIRECTORIES
   "${PICOLIBC_INCLUDE}")

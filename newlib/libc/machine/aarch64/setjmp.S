@@ -45,7 +45,9 @@
 
 // int setjmp (jmp_buf)
 	.global	setjmp
+#if !defined(__APPLE__)
 	.type	setjmp, %function
+#endif
 setjmp:
 #ifndef __LP64__
 	mov	w0, w0
@@ -61,11 +63,15 @@ setjmp:
 #undef REG_ONE
 	mov	w0, #0
 	ret
+#if !defined(__APPLE__)
 	.size	setjmp, .-setjmp
+#endif
 
 // void longjmp (jmp_buf, int) __attribute__ ((noreturn))
 	.global	longjmp
+#if !defined(__APPLE__)
 	.type	longjmp, %function
+#endif
 longjmp:
 #ifndef __LP64__
 	mov	w0, w0
@@ -84,4 +90,6 @@ longjmp:
 	cinc	w0, w1, eq
 	// use br not ret, as ret is guaranteed to mispredict
 	br	x30
+#if !defined(__APPLE__)
 	.size	longjmp, .-longjmp
+#endif

@@ -261,4 +261,8 @@ typedef	__int64_t	sbintime_t;
 #define __Long int32_t
 #define __ULong uint32_t
 
+#ifdef __APPLE__
+typedef intptr_t     ptrdiff_t;
+#endif
+
 #endif	/* _SYS_TYPES_H */

@@ -59,6 +59,14 @@
 GNU_PROPERTY (FEATURE_1_AND, FEATURE_1_BTI|FEATURE_1_PAC)
 #endif
 
+#ifdef __APPLE__
+#define ENTRY_ALIGN(name, alignment)	\
+  .global name;		\
+  .type name,%function;	\
+  .align alignment;		\
+  name:			\
+  BTI_C;
+#else
 #define ENTRY_ALIGN(name, alignment)	\
   .global name;		\
   .type name,%function;	\
@@ -66,6 +74,7 @@ GNU_PROPERTY (FEATURE_1_AND, FEATURE_1_BTI|FEATURE_1_PAC)
   name:			\
   .cfi_startproc;	\
   BTI_C;
+#endif
 
 #define ENTRY(name)	ENTRY_ALIGN(name, 6)
 
@@ -74,9 +83,13 @@ GNU_PROPERTY (FEATURE_1_AND, FEATURE_1_BTI|FEATURE_1_PAC)
   .type name,%function;	\
   name:
 
+#ifdef __APPLE__
+#define END(name)
+#else
 #define END(name)	\
   .cfi_endproc;		\
   .size name, .-name;
+#endif
 
 #define L(l) .L ## l
 

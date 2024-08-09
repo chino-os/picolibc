@@ -42,7 +42,9 @@
 	.text
 	.p2align \p2align
 	.global \f
+#if !defined(__APPLE__)
 	.type \f, %function
+#endif
 \f:
 	.endm
 
@@ -50,7 +52,7 @@
    Call strlen without setting up a full frame - it preserves x14/x15.
 */
 
-def_fn rawmemchr p2align=5
+def_fn rawmemchr, 5
 	.cfi_startproc
 	cbz	w1, L(do_strlen)
 	mov	x2, -1
@@ -65,6 +67,8 @@ L(do_strlen):
 	ret	x15
 	.cfi_endproc
 
+#if !defined(__APPLE__)
 	.size   rawmemchr, . - rawmemchr
+#endif
 #endif
 
