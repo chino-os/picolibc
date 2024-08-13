@@ -529,6 +529,7 @@ else()
     ${TARGET_COMPILE_OPTIONS}
     ${PICOLIBC_EXTRA_COMPILE_OPTIONS}
     ${PICOLIBC_MATH_FLAGS}
+    ${SPECS_ISYSTEM}
     )
 endif()
 
@@ -560,6 +561,7 @@ else()
     "-Wold-style-definition"
     "-frounding-math"
     "-fsignaling-nans"
+    "-Wno-attributes"
     )
 endif()
 

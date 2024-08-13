@@ -1,5 +1,6 @@
 // Copyright (c) SunnyCase. All rights reserved.
 // Licensed under the Apache license. See LICENSE file in the project root for full license information.
+#include "chino/os/hal/chips/wch/ch582/chip.h"
 #include <stdio.h>
 #include <chino/os/ke_services.h>
 #include <unistd.h>
@@ -9,6 +10,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#include <cstring>
 
 using namespace chino;
 using namespace chino::os;
@@ -17,7 +19,7 @@ using namespace chino::os;
 i_ke_services &
 os::ke_services() noexcept
 {
-    return *reinterpret_cast<i_ke_services *>(ke_services_address);
+    return *reinterpret_cast<i_ke_services *>(hal::chip_t::ke_services_address);
 }
 #endif
 
@@ -143,7 +145,7 @@ inet_ntoa(struct in_addr in)
 }
 
 const char *
-inet_ntop(int af, const void *src __restrict, char *dst __restrict,
+inet_ntop(int af, const void *__restrict__ src, char *__restrict__ dst,
           socklen_t size)
 {
     if (size == 0) {
@@ -364,7 +366,7 @@ inet_ipv6_pton(const char *src, void *dest)
 }
 
 int
-inet_pton(int af, const char *src __restrict, void *dest __restrict)
+inet_pton(int af, const char *__restrict__ src, void *__restrict__ dest)
 {
     switch (af) {
     case AF_INET:

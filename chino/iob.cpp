@@ -1,6 +1,6 @@
 // Copyright (c) SunnyCase. All rights reserved.
 // Licensed under the Apache license. See LICENSE file in the project root for full license information.
-#include <stdio.h>
+//#include <stdio.h>
 #include <sys/cdefs.h>
 #include <chino/os/ke_services.h>
 
@@ -8,7 +8,7 @@ using namespace chino;
 using namespace chino::os;
 
 static int
-stdio_putc(char c, FILE *file)
+stdio_putc(char c, FILE *)
 {
     if (ke_services().write(STDOUT_FILENO, &c, 1) != -1) {
         return (unsigned char)c;
@@ -19,7 +19,7 @@ stdio_putc(char c, FILE *file)
 }
 
 static int
-stdio_getc(FILE *file)
+stdio_getc(FILE *)
 {
     char c;
     auto ret = ke_services().read(STDIN_FILENO, &c, 1);

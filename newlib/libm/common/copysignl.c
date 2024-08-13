@@ -30,7 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "math_config.h"
 
-#if defined(_NEED_FLOAT_HUGE) && defined(_HAVE_BUILTIN_COPYSIGNL)
+#if defined(_NEED_FLOAT_HUGE) && defined(_HAVE_BUILTIN_COPYSIGNL) && !defined (__GNUC__)
 
 /* On platforms where long double is as wide as double.  */
 long double

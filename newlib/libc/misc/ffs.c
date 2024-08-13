@@ -58,7 +58,7 @@ No supporting OS subroutines are required.  */
  * builtin to implement ffs here. Instead, fall back to the ctz code
  * instead.
  */
-#if defined(_HAVE_BUILTIN_FFS) && defined(__GNUC__) && __INT_WIDTH__ != __LONG_WIDTH__
+#if defined(_HAVE_BUILTIN_FFS) && defined(__GNUC__)
 #undef _HAVE_BUILTIN_FFS
 #endif
 

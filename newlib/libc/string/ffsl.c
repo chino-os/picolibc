@@ -27,6 +27,10 @@
 #define _DEFAULT_SOURCE
 #include <strings.h>
 
+#if defined(_HAVE_BUILTIN_FFSL) && defined(__GNUC__)
+#undef _HAVE_BUILTIN_FFSL
+#endif
+
 int
 ffsl(long i)
 {
