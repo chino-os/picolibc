@@ -529,7 +529,6 @@ else()
     ${TARGET_COMPILE_OPTIONS}
     ${PICOLIBC_EXTRA_COMPILE_OPTIONS}
     ${PICOLIBC_MATH_FLAGS}
-    ${SPECS_ISYSTEM}
     )
 endif()
 
@@ -611,5 +610,5 @@ if(TESTS)
 
 endif()
 
-#install(FILES ${CMAKE_BINARY_DIR}/picolibc.specs DESTINATION lib)
-#install(FILES ${CMAKE_BINARY_DIR}/picolibc/include/picolibc.h DESTINATION include)
+install(FILES ${CMAKE_BINARY_DIR}/picolibc.specs DESTINATION lib)
+install(FILES ${CMAKE_BINARY_DIR}/picolibc/include/picolibc.h DESTINATION include)
